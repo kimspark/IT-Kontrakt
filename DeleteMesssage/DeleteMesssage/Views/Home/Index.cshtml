@@ -1,0 +1,77 @@
+﻿@model IEnumerable<DeleteMesssage.Models.Message>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <script src="~/Scripts/jquery-3.0.0.min.js"></script>
+    <script>
+        function CanDelete() {
+            var items = document.getElementsByName("message");
+            for (var i = 0; i < items.length; i++) {
+                if (items[i].checked == true) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        function disableButton() {
+             document.getElementById("del").disabled = !CanDelete();
+        }
+    </script>
+</head>
+<body>
+    <p>
+        @Html.ActionLink("Добавить сообщение", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+            </th>
+        </tr>
+    
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+               <input type="checkbox" name="message" onclick="disableButton()" id=@item.ID >@Html.DisplayFor(modelItem => item.Text)
+            </td>
+        </tr>
+    }
+    
+    </table>
+    <input id="del" type="button" value="Удалить" disabled="disabled">
+    <script>
+        $("input[name='message']").prop('checked', false);
+        $("#del").click(function () {
+            var items = document.getElementsByName("message");
+            var arr = []
+            for (var i = 0; i < items.length; i++) {
+                if (items[i].checked == true) {
+                    arr.push(items[i].id)
+                }
+            }
+            var postData = { ids: arr };
+            $.ajax({
+                type: "GET",
+                url: "/Home/Delete",
+                data: postData,
+                success: function (data) {
+                },
+                dataType: "json",
+                traditional: true
+            });
+        });
+        $(document).bind("ajaxSend", function () {
+        }).bind("ajaxStop", function () {
+            location.reload();
+
+        });
+    </script>
+</body>
+</html>
