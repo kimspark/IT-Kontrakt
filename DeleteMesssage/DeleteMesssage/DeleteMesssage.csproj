@@ -112,6 +112,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="SQL Tasks\KontraktQuery.sql" />
     <Content Include="SQL Tasks\Схема БД.png" />
     <Content Include="Web.config" />
     <Content Include="Views\Home\Create.cshtml" />
